@@ -14,7 +14,7 @@ app.use(express.json());
 connectDB();
 
 app.use("/api/auth", authRoutes);
-// app.use("/api/users", userRoutes);
+app.use("/api/users", userRoutes);
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
