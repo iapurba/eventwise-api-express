@@ -1,6 +1,6 @@
 # eventwise-api
 
-#### Event Ticketing and Management App Backend Services
+### Event Ticketing and Management App Backend Services
 
 This repository contains the backend services for our event ticketing and management application, built using Node.js and Express. The services provide a scalable and robust foundation for managing various aspects of event discovery, ticket booking, and user interaction.
 
@@ -27,16 +27,18 @@ Feel free to explore the codebase, customize the services, and contribute to enh
 For more information and detailed documentation, refer to the specific service directories within this repository.
 
 1. #### Authentication and User Management: 
-    - User Registration: __`POST /api/users/register`__
-    - User Login: __`POST /api/users/login`__
-    - User Profile: __`GET /api/users/:userId`__
-    - Update User Profile: __`PUT /api/users/:userId`__
-    - Delete User Profile: __`DELETE /api/users/:userId`__
+    - User Registration: __`POST /api/users/register`__ (both customer and organizer)
+    - User Login: __`POST /api/users/login`__ (both customer and organizer)
+    - User Profile: __`GET /api/users/:userId`__ (authorized user and admin only)
+    - Update User Profile: __`PUT /api/users/:userId`__ (authorized user and admin only)
+    - Update User Role: __`PUT /api/users/:userId/role`__ (admin only)
+    - Delete User Profile: __`DELETE /api/users/:userId`__ (admin only)
 
 2. #### Event Management:
-    - Create Event: __`POST /api/events`__
-    - Update Event: __`PUT /api/events/:eventId`__
-    - Delete Event: __`DELETE /api/events/:eventId`__
+    - Create Event: __`POST /api/events`__ (organizer only)
+    - Update Event: __`PUT /api/events/:eventId`__ (organizer only)
+    - Delete Event: __`DELETE /api/events/:eventId`__ (organizer only)
+    - Get Organizer Events: __`GET /api/organizers/:organizerId/events`__ (organizer only)
     - Get All Events: __`GET /api/events`__
     - Get Event Details: __`GET /api/events/:eventId`__
     - Get Events by Date Range: __`GET /api/events?start_date=yyyy-mm-dd&end_date=yyyy-mm-dd`__
