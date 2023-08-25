@@ -27,15 +27,14 @@ export const login = async (req, res) => {
         if (!user) {
             return res.status(401).json({ error: "Invalid Credential" });
         }
-        const passwordMatch = await user.comparePassword(password);
-        if (!passwordMatch) {
+        const passwordMatches = await user.comparePassword(password);
+        if (!passwordMatches) {
             return res.status(401).json({ error: "Invalid Credential" });
         }
 
         const token = jwt.sign({ _id: user._id, role: user.role }, process.env.SECRET_KEY, { expiresIn: tokenExpiration });
         res.status(200).json({ message: "Login successful", token });
     } catch (error) {
-        // console.log(error);
         res.status(400).json({ error: "Bad Request" });
     }
 };
