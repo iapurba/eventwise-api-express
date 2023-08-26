@@ -26,7 +26,7 @@ export const getEvents = async (req, res) => {
         }
 
         const events = await Event.find(eventQuery);
-        res.status(200).json({data: events });
+        res.status(200).json({ data: events });
 
     } catch (error) {
         res.status(500).json({ error: constants.STATUS_INTERNAL_SERVER_ERROR });
