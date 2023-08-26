@@ -7,8 +7,8 @@ const userSchema = mongoose.Schema({
     password: { type: String, required: true },
     role: {
         type: String,
-        enum: ["customer", "organizer", "admin"],
-        default: "customer",
+        enum: ["user", "organizer", "admin"],
+        default: "user",
         required: true,
     }
 });
@@ -18,18 +18,14 @@ userSchema.pre('save', async function (next) {
     if (!user.isModified("password")) {
         return next();
     }
-    try {
-        const hashedPassword = await bcrypt.hash(user.password, 10);
-        user.password = hashedPassword;
-        next();
-    } catch (error) {
-        return next(error);
-    }
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    this.password = hashedPassword;
+    next();
 });
 
-userSchema.methods.comparePassword = async function(enteredPassword) {
+userSchema.methods.comparePassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
-}
+};
 
 const User = mongoose.model("User", userSchema);
 

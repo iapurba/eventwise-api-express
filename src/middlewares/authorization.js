@@ -1,12 +1,10 @@
-export const authorizeUser = (req, res, next) => {
-    if (!req.user) {
-        return res.status(404).json({ error: "User Not Found" });
-    }
-    const authenticatedUserId = req.user._id.toString();
-    const requestedUserId = req.params.userId;
+import constants from "../utils/constants.js";
 
-    if (authenticatedUserId !== requestedUserId) {
-        return res.status(403).json({ error: "Access denied" });
+export const authorizeUser = (req, res, next) => {
+    const authenticatedUserId = req.user.userId;
+    const requestedUserId = req.params.userId;
+    if (authenticatedUserId == requestedUserId) {
+        return next();
     }
-    next();
+    return res.status(403).json({ error: constants.AUTH_ACCESS_DENIED });
 };
