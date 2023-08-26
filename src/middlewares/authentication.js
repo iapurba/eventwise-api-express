@@ -1,25 +1,23 @@
-import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import jwtUtils from "../utils/jwtUtils.js";
+import constants from "../utils/constants.js";
 
-export const verifyToken = async (req, res, next) => {
+export const requireLogin = async (req, res, next) => {
     const authHeader = req.header("Authorization");
     const token = authHeader && authHeader.replace("Bearer ", "");
     if (!token) {
-        return res.status(401).json({ error: "Access denied. Token missing." });
+        return res.status(401).json({ message: constants.AUTH_UNAUTHORIZED });
     }
     try {
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
-        const user = await User.findOne({ _id: decoded._id });
-        if (!user) {
-            return res.status(404).json({ error: "User Not Found" });
-        }
-        req.user = user;
+        const decoded = jwtUtils.verifyToken(token);
+        req.user = decoded;
         next();
+
     } catch (error) {
-        if (error.name === "TokenExpiredError") {
-            res.status(401).json({ message: "Token has expired. Please log in again." });
+        if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {
+            res.status(401).json({ message: constants.AUTH_INVALID_TOKEN });
         } else {
-            res.status(500).json({ message: "Internal server error" });
+            console.log(error.message);
+            res.status(500).json({ message: constants.STATUS_INTERNAL_SERVER_ERROR });
         }
     }
 };
