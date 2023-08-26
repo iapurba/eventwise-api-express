@@ -1,10 +1,33 @@
 import Event from "../models/Event.js";
 import constants from "../utils/constants.js";
 
-export const getAllEvents = async (req, res) => {
+export const getEvents = async (req, res) => {
+    const {
+        category,
+        location,
+        eventType,
+        startDate,
+        endDate
+    } = req.query;
+
     try {
-        const events = await Event.find();
-        res.status(200).json(events);
+        const eventQuery = {};
+
+        if (category) eventQuery.category = category;
+        if (location) eventQuery.city = location;
+        if (eventType) eventQuery.eventType = eventType;
+
+        if (startDate && endDate) {
+            eventQuery.date = { $gte: startDate, $lte: endDate };
+        } else if (startDate) {
+            eventQuery.date = { $gte: startDate };
+        } else if (endDate) {
+            eventQuery.data = { $lte: endDate };
+        }
+
+        const events = await Event.find(eventQuery);
+        res.status(200).json({data: events });
+
     } catch (error) {
         res.status(500).json({ error: constants.STATUS_INTERNAL_SERVER_ERROR });
     }
@@ -58,4 +81,3 @@ export const deleteEvent = async (req, res) => {
         res.status(400).json({ message: "Deletion Failed" });
     }
 };
-

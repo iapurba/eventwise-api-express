@@ -7,7 +7,7 @@ import { isAuthorizedEventOrganizer } from "../middlewares/organizerAuthMiddlewa
 
 const router = express.Router();
 
-router.get("/all", eventController.getAllEvents);
+router.get("", eventController.getEvents);
 router.get("/:eventId", eventController.getEvent);
 
 router.post("/",
