@@ -23,10 +23,10 @@ export const updateUser = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
-    const userId = req.parmas.userId;
+    const userId = req.params.userId;
     try {
         await User.findByIdAndRemove(userId);
-        res.status(204).json({ message: constants.USER_DELETED });
+        res.status(204).end();
     } catch (error) {
         res.status(400).json({ error: constants.USER_DELETION_FAILED });
     }
