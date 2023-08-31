@@ -41,7 +41,7 @@ For more information and detailed documentation, refer to the specific service d
     - Get Organizer Events: __`GET /api/organizers/:organizerId/events`__ (organizer only)
     - Get All Events: __`GET /api/events`__
     - Get Event Details: __`GET /api/events/:eventId`__
-    - Get Events by Date Range: __`GET /api/events?start_date=yyyy-mm-dd&end_date=yyyy-mm-dd`__
+    - Get Events by Date Range: __`GET /api/events?startDate=yyyy-mm-dd&endDate=yyyy-mm-dd`__
     - Get Events by Location: __`GET /api/events?location=city`__
     - Get Events by Category: __`GET /api/events?category=category_name`__
 
@@ -74,20 +74,10 @@ For more information and detailed documentation, refer to the specific service d
     - Get All Events: __`GET /api/admin/events`__
     - Get All Reviews: __`GET /api/admin/reviews`__
 
-9. #### Organizer Management:
-    - Organizer Registration: __`POST /api/organizers/register`__
-    - Organizer Login: __`POST /api/organizers/login`__
-    - Organizer Profile: __`GET /api/organizers/:organizerId`__
-    - Update Organizer Profile: __`PUT /api/organizers/:organizerId`__
-    - Create Organizer Event: __`POST /api/organizers/events`__
-    - Update Organizer Event: __`PUT /api/organizers/events/:eventId`__
-    - Delete Organizer Event: __`DELETE /api/organizers/events/:eventId`__
-    - Get Organizer Events: __`GET /api/organizers/:organizerId/events`__
-
-10. #### Notifications:
+9. #### Notifications:
     - Send Notification: __`POST /api/notifications`__
     - Error Handling:
 
-11. #### Others:
+10. #### Others:
     - View Event Categories: __`GET /api/categories`__
     - Search and Filter Options: __`GET /api/filters`__
