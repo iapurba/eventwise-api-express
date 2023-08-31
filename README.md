@@ -45,11 +45,12 @@ For more information and detailed documentation, refer to the specific service d
     - Get Events by Location: __`GET /api/events?location=city`__
     - Get Events by Category: __`GET /api/events?category=category_name`__
 
-3. #### Ticket Booking:
-    - Get Available Events: __`GET /api/events/available`__
-    - Book Tickets: __`POST /api/bookings`__
-    - Get Booking Details: __`GET /api/bookings/:bookingId`__
-    - Cancel Booking: __`DELETE /api/bookings/:bookingId`__
+3. #### Ticket Management:
+    - Create Ticket Types for an Event : __`POST /api/events/:eventId/tickets`__ (orgaizer only)
+    - Get Ticket Types for an Event: __`GET /api/events/:eventId/tickets`__
+    - Get Ticket Details: __`GET /api/tickets/:ticketId`__
+    - Update Ticket Details: __`PUT /api/tickets/:ticketId`__ (organizer only)
+    - Delete a Ticket Type: __`DELETE /api/tickets/:ticketId`__ (organizer only)
 
 4. #### Payment Integration:
     - Create Payment Intent: __`POST /api/payments/create-intent`__
