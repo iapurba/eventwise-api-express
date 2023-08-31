@@ -30,4 +30,13 @@ router.delete("/:eventId",
     eventController.deleteEvent
 );
 
+router.post("/:eventId/tickets",
+    requireLogin,
+    requireRole(constants.ROLE_ORGANIZER),
+    isAuthorizedEventOrganizer,
+    eventController.addTicketsAndPublish
+);
+
+router.get("/:eventId/tickets", eventController.getEventTickets);
+
 export default router;
