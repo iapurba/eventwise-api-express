@@ -18,19 +18,40 @@ const userSchema = new Schema({
     emailVerified: Boolean,
     phoneVerified: Boolean,
     profile: {
-        firstName: String,
-        lastName: String,
+        firstName: {
+            type: String,
+            required: true,
+        },
+        lastName: {
+            type: String,
+            required: true,
+        },
         profilePicture: String,
         bio: String,
         location: String,
     },
     address: {
-        addressLine1: String,
-        addressLine2: String,
+        addressLine1: {
+            type: String,
+            required: true,
+        },
+        addressLine2: {
+            type: String,
+            required: true,
+        },
         landmark: String,
-        city: String,
-        state: String,
-        pincode: String,
+        city: {
+            type: String,
+            required: true,
+        },
+        state: {
+            type: String,
+            required: true,
+        },
+        pincode: {
+            type: String,
+            required: true,
+        },
     },
     paymentMethods: [],
     favouriteEvents: [
