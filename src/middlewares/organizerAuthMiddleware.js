@@ -1,5 +1,5 @@
-import Event from "../models/Event.js";
-import constants from "../utils/constants.js";
+import Event from '../models/Event.js';
+import constants from '../utils/constants.js';
 
 export const isAuthorizedEventOrganizer = async (req, res, next) => {
     const eventId = req.params.eventId;
@@ -22,7 +22,7 @@ export const isAuthorizedEventOrganizer = async (req, res, next) => {
         next();
 
     } catch (error) {
-        if (error.name === "CastError") {
+        if (error.name === 'CastError') {
             res.status(400).json({ error: constants.STATUS_BAD_REQUEST });
         } else {
             res.status(500).json({ error: constants.STATUS_INTERNAL_SERVER_ERROR });

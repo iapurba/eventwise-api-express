@@ -1,9 +1,9 @@
-import jwtUtils from "../utils/jwtUtils.js";
-import constants from "../utils/constants.js";
+import jwtUtils from '../utils/jwtUtils.js';
+import constants from '../utils/constants.js';
 
 export const requireLogin = async (req, res, next) => {
-    const authHeader = req.header("Authorization");
-    const token = authHeader && authHeader.replace("Bearer ", "");
+    const authHeader = req.header('Authorization');
+    const token = authHeader && authHeader.replace('Bearer ', '');
     if (!token) {
         return res.status(401).json({ message: constants.AUTH_UNAUTHORIZED });
     }
@@ -13,7 +13,7 @@ export const requireLogin = async (req, res, next) => {
         next();
 
     } catch (error) {
-        if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {
+        if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
             res.status(401).json({ message: constants.AUTH_INVALID_TOKEN });
         } else {
             console.log(error.message);

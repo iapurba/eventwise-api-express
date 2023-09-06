@@ -1,24 +1,26 @@
 import Event from '../../models/Event.js';
 import Ticket from '../../models/Ticket.js';
+import constants from '../../utils/constants.js';
 
 export const createEvent = async (req, res) => {
     const eventData = req.body;
-    const organizer = req.user.userId;
+    const publisher = req.user.userId;
     try {
         const event = new Event({
             ...eventData,
-            organizer: organizer
+            createdBy: publisher
         });
         await event.save();
         res.status(201).json({ message: constants.EVENT_CREATED, data: event });
 
     } catch (error) {
+        console.log(error);
         res.status(400).json({ error: constants.STATUS_BAD_REQUEST });
     }
 };
 
 export const updateEvent = async (req, res) => {
-    const eventId = req.event._id;
+    const { eventId } = req.params;
     const eventDataToUpdate = req.body;
     try {
         const updatedEvent = await Event.findByIdAndUpdate(eventId, eventDataToUpdate, { new: true });

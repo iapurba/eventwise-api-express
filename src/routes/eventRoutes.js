@@ -1,42 +1,33 @@
-import express from "express";
-import * as eventController from "../controllers/eventController.js";
-import { requireLogin } from "../middlewares/authenticationMiddleware.js";
-import { requireRole } from "../middlewares/roleAuthMiddleware.js";
-import constants from "../utils/constants.js";
-import { isAuthorizedEventOrganizer } from "../middlewares/organizerAuthMiddleware.js";
+import express from 'express';
+import * as eventController from '../controllers/eventController.js';
+import { requireLogin } from '../middlewares/authenticationMiddleware.js';
+import * as publisherEventController from '../controllers/publishers/eventControllers.js';
 
 const router = express.Router();
 
-router.get("", eventController.getEvents);
-router.get("/:eventId", eventController.getEvent);
+router.get('/', eventController.getEvents);
+router.get('/:eventId', eventController.getEvent);
 
-router.post("/",
+router.post('/',
     requireLogin,
-    requireRole(constants.ROLE_ORGANIZER),
-    eventController.createEvent
+    publisherEventController.createEvent
 );
 
-router.put("/:eventId",
+router.put('/:eventId',
     requireLogin,
-    requireRole(constants.ROLE_ORGANIZER),
-    isAuthorizedEventOrganizer,
-    eventController.updateEvent
+    publisherEventController.updateEvent
 );
 
-router.delete("/:eventId",
+router.delete('/:eventId',
     requireLogin,
-    requireRole(constants.ROLE_ORGANIZER),
-    isAuthorizedEventOrganizer,
-    eventController.deleteEvent
+    publisherEventController.deleteEvent
 );
 
-router.post("/:eventId/tickets",
+router.post('/:eventId/tickets',
     requireLogin,
-    requireRole(constants.ROLE_ORGANIZER),
-    isAuthorizedEventOrganizer,
-    eventController.addTicketsAndPublish
+    publisherEventController.addTicketsAndPublish
 );
 
-router.get("/:eventId/tickets", eventController.getEventTickets);
+router.get('/:eventId/tickets', eventController.getEventTickets);
 
 export default router;

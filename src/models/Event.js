@@ -48,7 +48,6 @@ const eventSchema = new Schema({
         coordinates: {
             latitude: Number,
             longitude: Number,
-            required: false,
         },
     },
     date: {

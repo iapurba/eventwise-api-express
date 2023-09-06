@@ -1,5 +1,5 @@
-import User from "../models/User.js";
-import constants from "../utils/constants.js";
+import User from '../models/User.js';
+import constants from '../utils/constants.js';
 
 export const getUser = async (req, res) => {
     try {
@@ -53,7 +53,7 @@ export const updatePassword = async (req, res) => {
         res.status(500).json({
             error: {
                 message: constants.STATUS_INTERNAL_SERVER_ERROR,
-                details: "The provided data is invalid or an error occurred during the update."
+                details: 'The provided data is invalid or an error occurred during the update.'
             }
         });
     }
