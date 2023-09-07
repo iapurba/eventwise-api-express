@@ -1,5 +1,5 @@
-import Ticket from "../models/Ticket.js";
-import constants from "../utils/constants.js";
+import Ticket from '../models/Ticket.js';
+import constants from '../utils/constants.js';
 
 export const getTicket = async (req, res) => {
     try {
@@ -7,7 +7,7 @@ export const getTicket = async (req, res) => {
         const ticket = await Ticket.findById(ticketId);
 
         if (!ticket) {
-            return res.status(404).json({ error: "Ticket not found" });
+            return res.status(404).json({ error: 'Ticket not found' });
         }
 
         res.status(200).json(ticket);
@@ -26,9 +26,9 @@ export const updateTicket = async (req, res) => {
             await Ticket.findByIdAndUpdate(ticketId, updatedData, { new: true });
 
         if (!updatedTicket) {
-            return res.status(400).json({ error: "Error updating ticket" });
+            return res.status(400).json({ error: 'Error updating ticket' });
         }
-        res.status(200).json({ message: "Ticket updated Successfully" });
+        res.status(200).json({ message: 'Ticket updated Successfully' });
 
     } catch (error) {
         console.log(error);
@@ -42,7 +42,7 @@ export const deleteTicket = async (req, res) => {
         const deletedTicket = await Ticket.findByIdAndDelete(ticketId);
 
         if (!deletedTicket) {
-            return res.status(404).json({ error: "Ticket not found" });
+            return res.status(404).json({ error: 'Ticket not found' });
         }
 
         res.status(204).send();

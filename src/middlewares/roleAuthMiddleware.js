@@ -1,7 +1,7 @@
-import constants from "../utils/constants.js";
+import constants from '../utils/constants.js';
 
 export const restrictRoleUpdate = (req, res, next) => {
-    if (req.body.role && req.user.role != "admin") {
+    if (req.body.role && req.user.role != 'admin') {
         return res.status(403).json({ message: 'Access denied, Role update not allowed' });
     }
     next();

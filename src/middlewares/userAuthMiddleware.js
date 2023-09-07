@@ -1,4 +1,4 @@
-import constants from "../utils/constants.js";
+import constants from '../utils/constants.js';
 
 export const authorizeUser = (req, res, next) => {
     if (req.user.userId === req.params.userId) {
