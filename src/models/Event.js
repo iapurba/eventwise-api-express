@@ -1,22 +1,39 @@
 import mongoose, { Schema } from 'mongoose';
-import Ticket from './Ticket';
+import Ticket from './Ticket.js';
 
 const validatePincode = (pincode) => {
     return /^[0-9]{6}$/.test(pincode);
 };
 
+const isRequiredForPhysicalEvent = function () {
+    return this.eventType === 'physical';
+};
+
 const addressSchema = new mongoose.Schema({
-    street: String,
-    city: String,
-    state: String,
+    street: {
+        type: String,
+        required: isRequiredForPhysicalEvent,
+    },
+    city: {
+        type: String,
+        required: isRequiredForPhysicalEvent,
+    },
+    state: {
+        type: String,
+        required: isRequiredForPhysicalEvent,
+    },
     pincode: {
         type: String,
+        required: isRequiredForPhysicalEvent,
         validate: {
             validator: validatePincode,
             message: 'Pincode must be a 6-digit number.',
         },
     },
-    country: String,
+    country: {
+        type: String,
+        required: isRequiredForPhysicalEvent
+    },
 });
 
 const eventSchema = new Schema({
@@ -55,7 +72,10 @@ const eventSchema = new Schema({
         required: true,
     },
     location: {
-        venue: String,
+        venue: {
+            type: String,
+            required: isRequiredForPhysicalEvent,
+        },
         address: addressSchema,
         coordinates: {
             latitude: Number,
