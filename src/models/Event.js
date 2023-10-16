@@ -1,4 +1,23 @@
 import mongoose, { Schema } from 'mongoose';
+import Ticket from './Ticket';
+
+const validatePincode = (pincode) => {
+    return /^[0-9]{6}$/.test(pincode);
+};
+
+const addressSchema = new mongoose.Schema({
+    street: String,
+    city: String,
+    state: String,
+    pincode: {
+        type: String,
+        validate: {
+            validator: validatePincode,
+            message: 'Pincode must be a 6-digit number.',
+        },
+    },
+    country: String,
+});
 
 const eventSchema = new Schema({
     title: {
@@ -9,6 +28,16 @@ const eventSchema = new Schema({
         type: String,
         required: true,
     },
+    startDate: {
+        type: Date,
+        requred: true
+    },
+    endDate: Date,
+    startTime: {
+        type: String,
+        requred: true
+    },
+    endTime: String,
     category: {
         type: String,
         required: true,
@@ -18,48 +47,22 @@ const eventSchema = new Schema({
         enum: ['physical', 'online'],
         required: true,
     },
+    tickets: {
+        type: [{
+            ticketId: Schema.Types.ObjectId,
+            price: Number
+        }],
+        required: true,
+    },
     location: {
-        venue: {
-            type: String,
-            required: true,
-        },
-        address: {
-            street: {
-                type: String,
-                required: true,
-            },
-            city: {
-                type: String,
-                required: true,
-            },
-            state: {
-                type: String,
-                required: true,
-            },
-            pincode: {
-                type: String,
-                validate: {
-                    validator: (value) => /^[0-9]{6}$/.test(value),
-                    message: 'Pincode must be exactly 6 digits long.',
-                },
-                required: true,
-            },
-        },
+        venue: String,
+        address: addressSchema,
         coordinates: {
             latitude: Number,
             longitude: Number,
         },
     },
-    date: {
-        type: Date,
-        required: true,
-    },
-    startTime: Date,
     duration: String,
-    capacity: {
-        type: Number,
-        required: true,
-    },
     image: String,
     artists: [String],
     performances: [
@@ -69,19 +72,31 @@ const eventSchema = new Schema({
             endTime: String,
         }
     ],
+    eventGuide: {
+        ageRequirment: {
+            type: Number,
+            min: 0,
+        },
+        langauge: [String],
+        livePerformance: {
+            type: Boolean,
+            default: false,
+        }
+    },
     tags: [String],
     createdBy: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now,
-    },
+});
+
+eventSchema.set('timestamps', true);
+
+eventSchema.pre('remove', async function (next) {
+    try {
+        await Ticket.deleteMany({ eventId: this._id })
+        next();
+    } catch (error) { next(error); }
 });
 
 const Event = new mongoose.model('Event', eventSchema);

@@ -60,15 +60,9 @@ const userSchema = new Schema({
             ref: 'Event',
         },
     ],
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now,
-    },
 });
+
+userSchema.set('timestamps', true);
 
 userSchema.pre('save', async function (next) {
     const user = this;

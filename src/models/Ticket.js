@@ -28,13 +28,8 @@ const ticketSchema = new Schema({
     },
     endSaleDate: {
         type: Date,
-        required: true,
     },
     maxTicketsPerOrder: {
-        type: Number,
-        required: true,
-    },
-    minAgeRequirement: {
         type: Number,
         required: true,
     },
@@ -54,15 +49,9 @@ const ticketSchema = new Schema({
     seatingDetails: {
         type: Schema.Types.Mixed,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now,
-    },
 });
+
+ticketSchema.set('timestamps', true);
 
 const Ticket = mongoose.model('Ticket', ticketSchema);
 
