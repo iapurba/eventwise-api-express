@@ -95,7 +95,7 @@ const eventSchema = new Schema({
     image: String,
     status: {
         type: String,
-        enum: ['unpublished', 'published', 'cancelled', 'sold-out'],
+        enum: ['unpublished', 'published', 'cancelled'],
         required: true,
         default: 'unpublished'
     },

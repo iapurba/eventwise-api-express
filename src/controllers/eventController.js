@@ -4,6 +4,7 @@ import constants from '../utils/constants.js';
 import { formatEventResponse } from '../utils/formatters/eventFormatter.js';
 
 export const getEvents = async (req, res) => {
+    console.log('get events by query')
     const {
         category,
         location,
@@ -16,7 +17,9 @@ export const getEvents = async (req, res) => {
         const eventQuery = {};
 
         if (category) eventQuery.category = category;
-        if (location) eventQuery.location.address.city = location;
+        if (location) {
+            eventQuery['location.address.city'] = { $regex: new RegExp(location, 'i') } ;
+        }
         if (eventType) eventQuery.eventType = eventType;
 
         if (startDate && endDate) {
@@ -26,7 +29,6 @@ export const getEvents = async (req, res) => {
         } else if (endDate) {
             eventQuery.data = { $lte: endDate };
         }
-
         const events = await Event.find(eventQuery);
         const formattedEvents = events.map((event) => {
             return formatEventResponse(event.toObject());
@@ -34,16 +36,16 @@ export const getEvents = async (req, res) => {
         res.status(200).json(formattedEvents);
 
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: constants.STATUS_INTERNAL_SERVER_ERROR });
     }
 };
 
-export const getEvent = async (req, res) => {
+export const getEventById = async (req, res) => {
     const eventId = req.params.eventId;
     try {
         const event = await Event.findById(eventId);
         const formattedEvent = formatEventResponse(event.toObject());
-        console.log(formattedEvent)
         res.status(200).json(formattedEvent);
     } catch (error) {
         res.status(404).json({ error: constants.EVENT_NOT_FOUND });
