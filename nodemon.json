@@ -1,0 +1,9 @@
+{
+    "ext": "js,json,ts",
+    "watch": [
+        "src"
+    ],
+    "ignore": [
+        "test/"
+    ]
+}
