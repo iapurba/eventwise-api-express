@@ -1,7 +1,7 @@
 import express from 'express';
 import * as eventController from '../controllers/eventController.js';
 import { requireLogin } from '../middlewares/authenticationMiddleware.js';
-import * as publisherEventController from '../controllers/publishers/eventControllers.js';
+import * as publisherEventController from '../controllers/publishers/publisherEventControllers.js';
 
 const router = express.Router();
 

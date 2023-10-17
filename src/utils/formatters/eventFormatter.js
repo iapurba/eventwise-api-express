@@ -1,10 +1,10 @@
 import _ from 'lodash';
-import { formatDate, formatTime12hr } from './dateTimeFormatter.js';
+import { formatDate } from './dateTimeFormatter.js';
 
 export const formatEventResponse = (event) => {
-    const fieldsToExclude = ['__v', 'createdAt', 'updatedAt'];
+    const fieldsToExclude = ['_id', 'createdAt', 'createdBy', 'updatedAt', '__v', 'likes.users', 'status'];
     const formattedEvent = _.omit(event, fieldsToExclude);
-    const date = formatDate(event.date);
-    const startTime = formatTime12hr(event.date);
-    return { ...formattedEvent, date, startTime };
+    const startDate = formatDate(event.startDate);
+    const endDate = formatDate(event.endDate)
+    return { ...formattedEvent, id: event._id, startDate, endDate };
 };

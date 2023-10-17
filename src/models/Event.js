@@ -41,15 +41,16 @@ const eventSchema = new Schema({
         type: String,
         required: true,
     },
-    description: {
-        type: String,
-        required: true,
-    },
     startDate: {
         type: Date,
         requred: true
     },
-    endDate: Date,
+    endDate: {
+        type: Date,
+        default: function () {
+            return this.startDate
+        },
+    },
     startTime: {
         type: String,
         requred: true
@@ -63,6 +64,14 @@ const eventSchema = new Schema({
         type: String,
         enum: ['physical', 'online'],
         required: true,
+    },
+    details: {
+        description: {
+            type: String,
+            required: true,
+        },
+        imageGallery: [String],
+        termsAndConditions: [String],
     },
     tickets: {
         type: [{
@@ -84,29 +93,37 @@ const eventSchema = new Schema({
     },
     duration: String,
     image: String,
+    status: {
+        type: String,
+        enum: ['unpublished', 'published', 'cancelled', 'sold-out'],
+        required: true,
+        default: 'unpublished'
+    },
     artists: [String],
-    performances: [
-        {
-            artist: String,
-            startTime: String,
-            endTime: String,
-        }
-    ],
+    performances: [{
+        artist: String,
+        startTime: String,
+        endTime: String,
+    }],
     eventGuide: {
         ageRequirment: {
             type: Number,
             min: 0,
         },
-        langauge: [String],
+        languages: [String],
         livePerformance: {
             type: Boolean,
             default: false,
         }
     },
+    likes: {
+        count: { type: Number, default: 0 },
+        users: [{ type: Schema.Types.ObjectId, ref: 'User' }]
+    },
     tags: [String],
     createdBy: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Publisher'
     },
 });
 

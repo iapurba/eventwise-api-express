@@ -3,9 +3,10 @@ import Ticket from '../../models/Ticket.js';
 import constants from '../../utils/constants.js';
 
 export const createEvent = async (req, res) => {
-    const eventData = req.body;
-    const publisher = req.user.userId;
     try {
+        const eventData = req.body;
+        const publisher = req.user.publisherId;
+
         const event = new Event({
             ...eventData,
             createdBy: publisher
@@ -66,7 +67,7 @@ export const addTicketsAndPublish = async (req, res) => {
         await Ticket.insertMany(tickets.map(ticket => ({ eventId, ...ticket })));
 
         // Update the event's published status
-        event.published = true;
+        event.status = 'published';
         await event.save();
 
         res.status(200).json({ message: "Event published successfully" })
