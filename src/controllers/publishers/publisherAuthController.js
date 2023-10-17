@@ -1,8 +1,9 @@
 import EventPublisher from '../../models/Publisher.js';
 import constants from '../../utils/constants.js';
 import jwtUtils from '../../utils/jwtUtils.js';
+import { authController } from './index.js';
 
-export const registerPublisher = async (req, res) => {
+const registerPublisher = async (req, res) => {
     console.log(req.body);
     try {
         const { email } = req.body;
@@ -29,7 +30,7 @@ export const registerPublisher = async (req, res) => {
     }
 };
 
-export const loginPublisher = async (req, res) => {
+const loginPublisher = async (req, res) => {
     try {
         const { email, password } = req.body;
         const publisher = await EventPublisher.findOne({ email });
@@ -55,4 +56,9 @@ export const loginPublisher = async (req, res) => {
         console.log(error);
         res.status(500).json({ error: 'Error logging publisher' });
     }
-}
+};
+
+export default {
+    registerPublisher,
+    loginPublisher,
+};
