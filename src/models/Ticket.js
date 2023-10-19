@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import Event from './Event.js';
 
 const ticketSchema = new Schema({
     eventId: {
@@ -21,6 +22,9 @@ const ticketSchema = new Schema({
     availableQuantity: {
         type: Number,
         required: true,
+        default: function() {
+            return this.quantity;
+        },
     },
     startSaleDate: {
         type: Date,

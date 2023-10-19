@@ -24,4 +24,14 @@ router.post('/:eventId/tickets',
     ticketController.addTickets
 );
 
+router.put('/tickets/:ticketId',
+    requireLogin,
+    ticketController.updateTicket
+);
+
+router.delete('/tickets/:ticketId',
+    requireLogin,
+    ticketController.deleteTicket
+);
+
 export default router;
