@@ -1,7 +1,6 @@
 import Event from '../models/Event.js';
-import Ticket from '../models/Ticket.js';
 import constants from '../utils/constants.js';
-import { formatEventResponse } from '../utils/formatters/eventFormatter.js';
+import { proccessEventDocument } from '../utils/processors/eventDocumentProcessor.js';
 
 export const getEvents = async (req, res) => {
     console.log('get events by query')
@@ -31,7 +30,7 @@ export const getEvents = async (req, res) => {
         }
         const events = await Event.find(eventQuery);
         const formattedEvents = events.map((event) => {
-            return formatEventResponse(event.toObject());
+            return proccessEventDocument(event);
         });
         res.status(200).json(formattedEvents);
 
@@ -42,31 +41,15 @@ export const getEvents = async (req, res) => {
 };
 
 export const getEventById = async (req, res) => {
-    const eventId = req.params.eventId;
-    try {
-        const event = await Event.findById(eventId);
-        const formattedEvent = formatEventResponse(event.toObject());
-        res.status(200).json(formattedEvent);
-    } catch (error) {
-        res.status(404).json({ error: constants.EVENT_NOT_FOUND });
-    }
-};
-
-export const getEventTickets = async (req, res) => {
+    console.log(req.params.eventId);
     try {
         const eventId = req.params.eventId;
         const event = await Event.findById(eventId);
+        const formattedEvent = proccessEventDocument(event);
 
-        if (!event) {
-            return res.status(404).json({ error: constants.EVENT_NOT_FOUND });
-        }
-        // Find tickets from the Ticket collection 
-        const tickets = await Ticket.findMany({ eventId: eventId });
-
-        res.status(200).json(tickets);
+        res.status(200).json(formattedEvent);
 
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: constants.STATUS_INTERNAL_SERVER_ERROR });
+        res.status(404).json({ error: constants.EVENT_NOT_FOUND });
     }
 };
