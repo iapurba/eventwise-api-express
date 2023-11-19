@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import connectDB from './config/mongodb.js';
 import * as routes from './routes/index.js';
 import cors from 'cors';
+import specs from './config/swagger.js';
+import swaggerUi from 'swagger-ui-express';
 
 dotenv.config();
 
@@ -21,9 +23,8 @@ app.use('/api/users', routes.userRoutes);
 app.use('/api/events', routes.eventRoutes);
 app.use('/api', routes.bookingRoutes);
 
-// Publisher APIs
-app.use('/api/auth/publishers', routes.publisherAuthRoutes);
-app.use('/api/publishers/events', routes.publisherEventRoutes);
+// Serve Swagger UI at /api-docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
