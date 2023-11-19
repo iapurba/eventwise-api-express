@@ -16,6 +16,7 @@ export const processTicketDocument = (ticketDocument) => {
     const processedTicket = _.omit(ticketObj, fieldsToExclude);
     const id = ticketObj._id;
     const startSaleDate = formatDate(ticketObj.startSaleDate);
+    const isAvailable = ticketObj.availableQuantity > 0;
 
-    return { id, ...processedTicket, startSaleDate };
+    return { id, ...processedTicket, startSaleDate, isAvailable };
 };
