@@ -7,51 +7,26 @@ const userSchema = new Schema({
         required: true,
         unique: true,
     },
-    password: {
-        type: String,
-        required: true,
-    },
-    phoneNumber: {
-        type: String,
-        required: true,
-    },
+    otp: String,
+    otpExpiration: Date,
+    password: String,
+    phoneNumber: String,
     emailVerified: Boolean,
     phoneVerified: Boolean,
     profile: {
-        firstName: {
-            type: String,
-            required: true,
-        },
-        lastName: {
-            type: String,
-            required: true,
-        },
+        firstName: String,
+        lastName: String,
         profilePicture: String,
         bio: String,
         location: String,
     },
     address: {
-        addressLine1: {
-            type: String,
-            required: true,
-        },
-        addressLine2: {
-            type: String,
-            required: true,
-        },
+        addressLine1: String,
+        addressLine2: String,
         landmark: String,
-        city: {
-            type: String,
-            required: true,
-        },
-        state: {
-            type: String,
-            required: true,
-        },
-        pincode: {
-            type: String,
-            required: true,
-        },
+        city: String,
+        state: String,
+        pincode: String,
     },
     paymentMethods: [],
     favouriteEvents: [
