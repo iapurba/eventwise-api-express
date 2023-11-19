@@ -40,7 +40,6 @@ const bookingSchema = new Schema({
     bookingReference: {
         referenceId: {
             type: String,
-            // required: true,
         },
         qrCode: {
             type: String,
@@ -50,21 +49,14 @@ const bookingSchema = new Schema({
         paymentMethod: {
             type: String,
             enum: ['Credit Card', 'UPI', 'Netbanking'],
-            //   required: true,
         },
     },
     ticketDetails: {
         type: Schema.Types.Mixed,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now,
-    },
 });
+
+bookingSchema.set('timestamps', true);
 
 const Booking = mongoose.model('Booking', bookingSchema);
 

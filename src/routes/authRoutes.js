@@ -1,12 +1,12 @@
 import express from 'express';
 import * as userAuthController from '../controllers/userAuthController.js';
-import * as publisherAuthController from '../controllers/publishers/publisherAuthController.js';
+import * as authController from '../controllers/authController.js';
 
 const router = express.Router();
 
-router.post('/users/register', userAuthController.registerUser);
-router.post('/users/login', userAuthController.loginUser);
-router.post('/publishers/register', publisherAuthController.registerPublisher);
-router.post('/publishers/login', publisherAuthController.loginPublisher);
+router.post('/register', userAuthController.registerUser);
+router.post('/login', userAuthController.loginUser);
+router.post('/request-otp', authController.requestOTP);
+router.post('/verify-otp', authController.verifyOTP);
 
 export default router;

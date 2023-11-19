@@ -1,3 +1,4 @@
+import Ticket from '../models/Ticket.js';
 import User from '../models/User.js';
 import constants from '../utils/constants.js';
 
@@ -5,11 +6,23 @@ export const getUser = async (req, res) => {
     try {
         const userId = req.params.userId;
         const user = await User.findById(userId);
-        res.status(200).json(user);
+        res.status(200).json(user);        
     } catch (error) {
         res.status(404).json({ error: constants.STATUS_NOT_FOUND });
     }
 };
+
+export const getUserProfile = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const user = await User.findById(userId);
+        const userTickets = await Ticket.find({userId: user._id});
+        res.status(200).json({...user.toObject(), tickets: userTickets});
+
+    } catch (error) {
+        res.status(500).json({error: constants.STATUS_INTERNAL_SERVER_ERROR});
+    }
+}
 
 export const updateUser = async (req, res) => {
     const userId = req.params.userId;

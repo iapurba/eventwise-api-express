@@ -1,51 +1,20 @@
 import Ticket from '../models/Ticket.js';
+import Event from '../models/Event.js';
 import constants from '../utils/constants.js';
+import { processTicketDocument } from '../utils/processors/ticketDocProcessor.js';
 
-export const getTicket = async (req, res) => {
+export const getEventTickets = async (req, res) => {
     try {
-        const ticketId = req.params.ticketId;
-        const ticket = await Ticket.findById(ticketId);
+        const eventId = req.params.eventId;
+        const event = await Event.findById(eventId);
 
-        if (!ticket) {
-            return res.status(404).json({ error: 'Ticket not found' });
+        if (!event) {
+            return res.status(404).json({ error: constants.EVENT_NOT_FOUND });
         }
-
-        res.status(200).json(ticket);
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: constants.STATUS_INTERNAL_SERVER_ERROR });
-    }
-};
-
-export const updateTicket = async (req, res) => {
-    try {
-        const ticketId = req.params.ticketId;
-        const updatedData = req.body;
-        const updatedTicket =
-            await Ticket.findByIdAndUpdate(ticketId, updatedData, { new: true });
-
-        if (!updatedTicket) {
-            return res.status(400).json({ error: 'Error updating ticket' });
-        }
-        res.status(200).json({ message: 'Ticket updated Successfully' });
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: constants.STATUS_INTERNAL_SERVER_ERROR });
-    }
-};
-
-export const deleteTicket = async (req, res) => {
-    try {
-        const ticketId = req.params.ticketId;
-        const deletedTicket = await Ticket.findByIdAndDelete(ticketId);
-
-        if (!deletedTicket) {
-            return res.status(404).json({ error: 'Ticket not found' });
-        }
-
-        res.status(204).send();
+        // Find tickets from the Ticket collection 
+        const tickets = await Ticket.find({ eventId: eventId });
+        const processedTickets = tickets.map(ticket => processTicketDocument(ticket));
+        res.status(200).json(processedTickets);
 
     } catch (error) {
         console.log(error);

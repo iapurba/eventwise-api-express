@@ -13,10 +13,10 @@ export const registerUser = async (req, res) => {
         const user = new User({ ...req.body });
         await user.save();
         // Generate payload and sign a JWT token
-        const payload = { userId: user._id, role: user.role };
+        const payload = { userId: user._id, email };
         const token = jwtUtils.signToken(payload);
 
-        res.status(201).json({ message: constants.USER_REGISTERED, token });
+        res.status(201).json({ message: constants.USER_REGISTERED, token , user: user});
 
     } catch (error) {
         res.status(400).json({ error: constants.STATUS_BAD_REQUEST });
@@ -35,7 +35,7 @@ export const loginUser = async (req, res) => {
             return res.status(401).json({ error: constants.AUTH_INVALID_CREDENTIALS });
         }
         // Generate payload and sign a JWT token
-        const payload = { userId: user._id, role: user.role };
+        const payload = { userId: user._id, email };
         const token = jwtUtils.signToken(payload);
 
         res.status(200).json({ message: constants.LOGIN_SUCCESS, token });

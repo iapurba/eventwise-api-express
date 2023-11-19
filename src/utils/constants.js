@@ -12,11 +12,6 @@ const constants = {
     STATUS_UNAUTHORIZED_DETAILS: 'Authentication credentials are missing or invalid.',
     STATUS_FORBIDDEN_DETAILS: 'You do not have the necessary permissions to access this resource.',
 
-    // User Roles
-    ROLE_USER: 'user',
-    ROLE_ORGANIZER: 'organizer',
-    ROLE_ADMIN: 'admin',
-
     // Authentication and Authorization Messages
     AUTH_UNAUTHORIZED: 'Authentication required',
     AUTH_INVALID_TOKEN: 'Invalid token',
