@@ -1,7 +1,7 @@
 import Ticket from '../models/Ticket.js';
 import Event from '../models/Event.js';
 import constants from '../utils/constants.js';
-import { processTicketDocument } from '../utils/processors/ticketDocumentProcessor.js';
+import { processTicketDocument } from '../utils/processors/ticketDocProcessor.js';
 
 export const getEventTickets = async (req, res) => {
     try {

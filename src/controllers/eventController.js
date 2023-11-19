@@ -1,6 +1,6 @@
 import Event from '../models/Event.js';
 import constants from '../utils/constants.js';
-import { proccessEventDocument } from '../utils/processors/eventDocumentProcessor.js';
+import { proccessEventDocument } from '../utils/processors/eventDocProcessor.js';
 
 export const getEvents = async (req, res) => {
     console.log('get events by query')
